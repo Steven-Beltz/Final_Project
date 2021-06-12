@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choice</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body class="bg-dark p-3">
+    <div class="container">
+        <div class="row box2"></div>
+<!-- Choosing to be a Seller or a Buyer -->
+<!-- Buying Option -->
+        <div class="row align-items-center justify-content-around">
+            <div class="col-4">
+                <div class="col-3 offset-8 justify-self-end">
+                    <button class="btn btn-success button5 box" style="height: 100px; width: 100px;">
+                    <a href="/buyer/search" class="text-decoration-none text-light">
+                        Buying
+                    </a>
+                </button>
+                </div>
+<!-- Selling Option -->
+                <div class="box3">
+                    <img src="{% static 'ninja_head_green.png' %}" alt="green buying ninja" class="img-fluid box3">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="box3">
+                    <img src="{% static 'ninja_head_red_gimp.png' %}" alt="red selling ninja" class="img-fluid box3">
+                </div>
+                <button class="btn btn-danger button5 box" style="height: 100px; width: 100px;">
+                    <a href="/seller/orders" class="text-decoration-none text-light">
+                        Selling
+                    </a>
+                </button>
+            </div>
+            
+        </div>
+<!-- Edit Profile Info Billing/Shipping, Name, PW(?), collapseable -->
+        <div class="box1"></div>
+        <div class="row">
+            <a class="btn btn-outline-secondary col-8 offset-2" data-bs-toggle="collapse" href="#edit_profile" role="button" aria-expanded="false" aria-controls="edit_profile">
+                Edit Profile
+            </a>
+        </div>
+        <div>
+            <div class="collapse text-light" id="edit_profile">
+                <h3>Profile</h3>
+                <form action="/edit_profile" method="POST">
+                    {% csrf_token %}
+                    <div class="row justify-content-around">
+                        <div class="col">
+                            <label class="form-label"> First Name: <input type="text" name="fname" value="{{user.first_name}}" class="form-control"></label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Last Name: <input type="text" name="lname" value="{{user.last_name}}" class="form-control"></label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">
+                                Email: <input type="text" name="email" value="{{user.email}}" class="form-control">
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">
+                                Password: <input type="password" name="pw" class="form-control">
+                            </label>
+                        </div>
+                    </div>
+                    <input type="submit" value="Save" class="col btn btn-secondary">
+                </form>
+            </div>
+            <div class="box1"></div>
+            <div class="row justify-content-around m-3">
+                <a class="btn btn-outline-secondary col-3" data-bs-toggle="collapse" href="#edit_ship" role="button" aria-expanded="false" aria-controls="edit_ship">
+                    Edit Shipping Address Information
+                </a>
+                <a class="btn btn-outline-secondary justify-self-end col-3" data-bs-toggle="collapse" href="#edit_bill" role="button" aria-expanded="false" aria-controls="edit_bill">
+                    Edit Billing Address Information
+                </a>
+            </div>
+            <div class="collapse text-light" id="edit_ship">
+                <div class="collaps justify-content-center" id="edit_ship">
+                    <h3 class="col">Shipping Address</h3>
+                    <form action="/edit_ship_add" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <label class="col-3 form-label">
+                                First Name: <input type="text" name="ship_fname" value="{{user.ship.fname}}" class="form-control">
+                            </label>
+                            <label class="col-3 form-label">
+                                Last Name: <input type="text" name="ship_lname" value="{{user.ship.lname}}" class="form-control">
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 form-label">
+                                Address: <input type="text" name="ship_add_1" value="{{user.ship.add_1}}" class="form-control">
+                            </label>
+                            <label class="col-3 form-label">
+                                Address 2: <input type="text" name="ship_add_2" value="{{user.ship.add_2}}" class="form-control">
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 form-label">
+                                City: <input type="text" name="ship_city" value="{{user.ship.city}}" class="form-control">
+                            </label>
+                            <label class="col-1 form-label">
+                                State:<input type="text" name="ship_state" value="{{user.ship.state}}" class="form-control">
+                            </label>
+                            <label class="col-2 form-label">
+                                Zipcode:<input type="text" name="ship_zip" value="{{user.ship.zip}}" class="form-control">
+                            </label>
+                        </div>
+                        <div class="col-1">
+                            <input type="submit" value="Save" class=" btn btn-secondary align-self-center">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="collapse text-light" id="edit_bill">
+                <h3 class="col">Billing Address</h3>
+                <form action="/edit_bill_add" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <label class="form-label col-3">
+                            First Name: <input type="text" name="bill_fname" value="{{user.bill.fname}}" class="form-control">
+                        </label>
+                        <label class="form-label col-3">
+                            Last Name: <input type="text" name="bill_lname" value="{{user.bill.lname}}" class="form-control">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="form-label col-3">
+                            Address: <input type="text" name="bill_add_1" value="{{user.bill.add_1}}" class="form-control">
+                        </label>
+                        <label class="form-label col-3">
+                            Address 2: <input type="text" name="bill_add_2" value="{{user.bill.add_2}}" class="form-control">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="form-label col-3">
+                            City: <input type="text" name="bill_city" value="{{user.bill.city}}" class="form-control">
+                        </label>
+                        <label class="form-label col-2">
+                            State:<input type="text" name="bill_state" value="{{user.bill.state}}" class="form-control">
+                        </label>
+                        <label class="form-label col-1">
+                            Zipcode:<input type="text" name="bill_zip" value="{{user.bill.zip}}" class="form-control">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="form-label col-2">
+                            Card #:<input type="text" name="bill_card_num" value="{{user.bill.card_num}}" class="form-control">
+                        </label>
+                        <label class="form-label col-2">
+                            Security Code:<input type="text" name="bill_sec_num" class="form-control">
+                        </label>
+                        <label class="form-label col-2">
+                            Expiration Date: <input type="date" name="bill_exp_date" value="{{user.bill.exp_date}}" class="form-control">
+                        </label>
+                    </div>
+                    <input type="submit" value="Save" class="col btn btn-secondary">
+                </form>
+            </div>
+        </div>
+        <div class="box3"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>

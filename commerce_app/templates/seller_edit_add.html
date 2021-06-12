@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller_Add/Edit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container justify-content-center">
+    <div class="box1"></div>
+<!-- Edit/Add Product - ID # -->
+        <div class="row justify-content-center">
+            <h2 class="col-4">Edit Prouct - ID {{ product.id }}</h2>
+        </div>
+        <form action="/seller/product/edit/{{ product.id }}" method="POST">
+            {% csrf_token %}
+<!-- Form --Name / Description/ Categories/ Add Category/ Images/ Uploaded IMages Delete/Main Buttons-->
+            <div class="col-4 offset-4">
+                <div class="row border border-dark m-1 p-1">
+                    <label class="form-label col align-self-center">Name:</label>
+                    <input type="text" name="name" value="{{ product.name }}" class="col border border-dark">
+                </div>
+                <div class="row border border-dark m-1 p-1">
+                    <label class="form-label col align-self-center">Description</label>
+                    <input type="text" name="desc" value="{{ product.desc }}" class="col border border-dark"> 
+                </div>
+                <div class="row border border-dark m-1 p-1">
+                    <label class="form-label col align-self-center">Categories</label>
+                    <select name="category" class="form-select col border">
+                        {% for category in categories.all %}
+                        <option value="{{ category.id }}">
+                            {{ category.name }}
+                            <a href="/edit_category/{{ category.id }}">Edit Symbol</a>
+                            <a href="/delete_category/{{ category.id }}">Delete Symbol</a>
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row border border-dark m-1 p-1">
+                    <label class="form-label col align-self-center">Add Category</label>
+                    <input type="text" name="addcat" class="col border border-dark">
+                </div>
+                <div class="row border border-dark m-1 p-1">
+                    <label class="form-label col align-self-center">Images</label>
+                    <input type="button" name="image" value="Upload" class="col btn btn-outline-info">
+                </div>
+            </div>
+<!-- Drag Icon -->
+            {% for image in product.image.all %}
+                <li>
+                    {{ product.image }} img.png
+                    <a href="/delete_image">Delete Symbol</a>
+                    <input type="checkbox" name="main" value="Main">
+                </li>
+            {% endfor %}
+<!-- Cancel/ Preview/ Update -->
+            <div class="row justify-content-center">
+                <a href="/cancel" class="col-1 m-1 btn btn-outline-danger">Cancel</a>
+                <a href="/Preview" class="col-1 m-1 btn btn-outline-warning">Preview</a>
+                <a href="/Update" class="col-1 m-1 btn btn-outline-success">Update</a>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>

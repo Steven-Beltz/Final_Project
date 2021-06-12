@@ -1,0 +1,28 @@
+.button1 {border-radius: 2px;}
+.button2 {border-radius: 4px;}
+.button3 {border-radius: 8px;}
+.button4 {border-radius: 12px;}
+.button5 {border-radius: 50%;}
+
+.box1 {height: 100px; width: auto;}
+.box2 {height: 200px; width: auto;}
+.box3 {height: 300px; width: auto;}
+.box4 {height: 400px; width: auto;}
+.box5 {height: 500px; width: auto;}
+
+.vertical-text {
+    width:1px;
+    word-wrap: break-word;
+    white-space:pre-wrap; 
+}
+
+* {
+    border: 5px;
+    border-width: 5px;
+    border-color: black;
+}
+
+.icon1 {
+    height: 50px;
+    width: 50px;
+}

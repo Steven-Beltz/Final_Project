@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller_Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body class="bg-dark p-3">
+    <div class="box1"></div>
+<!-- Dashboard with Orders/Products/Log Off -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand mx-3" href="/login">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">TEST</span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 pt-2">
+                        <li class="nav-item mx-3">
+                            <h3 class="text-danger text-decoration-underline">Seller Dashboard</h3>
+                        </li>
+                        <li class="nav-item mx-5 border border-danger">
+                            <a class="nav-link" href="/seller/orders">Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/seller/products">Products</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <a href="/logout" class="btn btn-outline-danger">Log Out</a>
+                </div>
+            </div>
+        </nav>
+<!-- Search Bar and FIlter-->
+        <div class="row p-2 mt-3 justify-content-between">
+            <div class="col-4">
+                <form class="d-flex">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"> Search </button>
+                </form>
+            </div>
+<!-- Filter by Status -->
+            <div class="col-2">
+                <form action="/seller/order/filter_orders" method="POST">
+                    {% csrf_token %}
+                    <select name="status" class="form-select">
+                        <option selected value="all">Show All</option>
+                        <option value="process">Order In Process</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+<!-- Table with Order Id/ Name/ Date/ Billing Address/ Total $/ Status -->
+        <div class="col p-4 border-start border-end border-danger">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Billing Address</th>
+                    <th scope="col">Total $</th>
+                    <th scope="col">Status</th>
+                </thead>
+                <tbody class="">
+                    <tr class="table-success">
+                        <th scope="row">Test ID</th>
+                        <td>Name</td>
+                        <td>Date</td>
+                        <td>Billing</td>
+                        <td>Total</td>
+                        <td>Shipped</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <th scope="row">Test ID</th>
+                        <td>Name</td>
+                        <td>Date</td>
+                        <td>Billing</td>
+                        <td>Total</td>
+                        <td>In-Process</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <th scope="row">Test ID</th>
+                        <td>Name</td>
+                        <td>Date</td>
+                        <td>Billing</td>
+                        <td>Total</td>
+                        <td>Cancelled</td>
+                    </tr>
+                    {% for order in admin.orders.all %}
+                        <tr>
+                            <td><a href="/seller/orders/show/{{order.id}}">{{order.id}}</a></td>
+                            <td>{{order.user.fname}}</td>
+                            <td>{{order.date}}</td>
+                            <td>{{order.user.bill.add}}</td>
+                            <td>{{order.total}}</td>
+                            <td>
+                                <form action="/seller/order/{{order.id}}/edit_status" method="POST">
+                                    {% csrf_token %}
+                                    <select name="status">
+                                        <option value="">{{order.status}}</option>
+                                        <option value="process">Order In Process</option>
+                                        <option value="shipped">Shipped</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+<!-- Page Numbers -->
+        <div class="row justify-content-center">
+                <nav aria-label="Page navigation example" class="col-3">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="/seller/orders/1">1</a></li>
+                        <li class="page-item"><a class="page-link" href="/seller/orders/2">2</a></li>
+                        <li class="page-item"><a class="page-link" href="/seller/orders/3">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>
