@@ -10,11 +10,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
 </head>
 <body class="container bg-dark p-3">
-    <div class="row justify-content-center m-2 p-2 bg-primary">
+    <div class="row justify-content-center border-start border-end p-2 bg-primary">
             
     </div>
     <!-- Login/Register -->
-        <div class="row justify-content-center border-start border-end border-white border-3 m-2 p-4 bg-info bg-gradient">
+        <div class="row justify-content-center border-start border-end p-4 bg bg-gradient">
             <div class="col-6 offset-2 align-self-center">
                 <h1 class="text-center text-light">Welcome to Dojo eCommerce!</h1>
                 <h6 class="text-center text-secondary">A market place for coders and ninjas alike to buy and trade.</h6>
@@ -23,9 +23,10 @@
                 <img src="{% static 'ninja-calm.png' %}" alt="resting ninja" class="img-fluid">
             </div>
         </div>
-        <div class="row justify-content-center border-start border-end border-white border-4 m-2 p-2 bg-info bg-gradient text-light">
-            <div class="col col-lg-6 border-end border-start border-3 border-info m-2 p-2">
-                <h2 class="text-center text-black-50">Login Here</h2>
+<!-- login -->
+        <div class="row justify-content-center border-start border-end p-2 text-light">
+            <div class="col col-lg-6 border-end border-start border-info m-2 p-2">
+                <h2 class="text-center">Login Here</h2>
                 <form action="/login" method="POST">
                     {% csrf_token %}
                     <div class="row p-5">
@@ -38,9 +39,10 @@
                 </form>
             </div>
         </div>
-        <div class="row justify-content-center border-start border-end border-white border-5 m-2 p-2 bg-info bg-gradient text-light">
-            <div class="col col-lg-6 border-start border-end border-4 border-info m-2 p-2">
-                <h2 class="text-center text-black-50">Register Here</h2>
+<!-- register -->
+        <div class="row justify-content-center border-start border-end p-2 text-light">
+            <div class="col col-lg-6 border-start border-end border-info p-2">
+                <h2 class="text-center">Register Here</h2>
                 <form action="/register" method="POST">
                         {% csrf_token %}
                     <div class="row">
@@ -60,7 +62,7 @@
                 </form>
             </div>
         </div>
-        <div class="row justify-content-center m-2 p-2 bg-primary">
+        <div class="row justify-content-center border-start border-end p-2 bg-primary">
             
         </div>
 </body>
